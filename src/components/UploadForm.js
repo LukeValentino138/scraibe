@@ -32,7 +32,7 @@ const UploadForm = () => {
         setIsLoading(false);
         setProgress(100); // Set progress to 100% when done
       } else if (statusData.status === 'IN_PROGRESS') {
-        setTimeout(() => checkTranscriptionStatus(jobName), 500); // Retry after 5 seconds
+        setTimeout(() => checkTranscriptionStatus(jobName), 500); // Retry after 0.5 seconds
       } else {
         setTranscription('Transcription failed.');
         setIsLoading(false);
