@@ -12,7 +12,7 @@ const SummariseForm = ({ transcription }) => {
     setSummary('');
 
     try {
-      const response = await fetch(`${apiEndpoint}/summarise`, {
+      const response = await fetch(`${apiEndpoint}/geminiSummarise`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
