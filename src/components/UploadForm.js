@@ -3,10 +3,9 @@ import './UploadForm.css';
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:3000';
 
-const UploadForm = () => {
+const UploadForm = ({ setTranscription }) => {
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(0);
-  const [transcription, setTranscription] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleFileChange = (event) => {
@@ -28,6 +27,7 @@ const UploadForm = () => {
       const statusData = await statusResponse.json();
 
       if (statusData.status === 'COMPLETED') {
+        // Use setTranscription prop to update the transcription in App.js
         setTranscription(statusData.transcription);
         setIsLoading(false);
         setProgress(100); // Set progress to 100% when done
@@ -124,7 +124,6 @@ const UploadForm = () => {
 
   return (
     <div className="upload-form">
-      <h1>Audio Transcription App</h1>
       <input type="file" accept="audio/*" onChange={handleFileChange} />
       <button onClick={handleUpload} disabled={isLoading}>
         {isLoading ? 'Processing...' : 'Upload and Transcribe'}
@@ -132,8 +131,6 @@ const UploadForm = () => {
       <div className="progress-bar">
         <div className="progress-bar-fill" style={{ width: `${progress}%` }}></div>
       </div>
-      <p>Transcription Result:</p>
-      <p className="transcription">{transcription || 'Your transcription will appear here...'}</p>
     </div>
   );
 };
