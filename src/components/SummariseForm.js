@@ -10,7 +10,34 @@ const SummariseForm = ({ transcription }) => {
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT;
 
-  const levels = ['University', 'Year 10', 'Year 1'];
+  const levels = [
+    'Kindergarten (Ages 4-5)', 
+    'Preparatory (Ages 5-6)', 
+    'Year 1 (Ages 6-7)', 
+    'Year 2 (Ages 7-8)',
+    'Year 3 (Ages 8-9)', 
+    'Year 4 (Ages 9-10)', 
+    'Year 5 (Ages 10-11)', 
+    'Year 6 (Ages 11-12)',
+    'Year 7 (Ages 12-13)', 
+    'Year 8 (Ages 13-14)', 
+    'Year 9 (Ages 14-15)', 
+    'Year 10 (Ages 15-16)',
+    'Year 11 (Ages 16-17)', 
+    'Year 12 (Ages 17-18)', 
+    'University Undergraduate in Field', 
+    'University Undergraduate in Adjacent Field',
+    'University Undergraduate in Unrelated Field', 
+    'University Postgraduate in Field', 
+    'University Postgraduate in Adjacent Field',
+    'University Postgraduate in Unrelated Field', 
+    'General Public', 
+    'Industry Professional in Related Field',
+    'Industry Professional in Unrelated Field', 
+    'ESL Learners', 
+    'Individuals with Learning Challenges',
+
+  ];
 
   const handleSummarise = async () => {
     if (level === 'Select Level') {

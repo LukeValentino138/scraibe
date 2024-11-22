@@ -44,10 +44,11 @@ function App() {
 
         <hr />
 
-        {/* Text-to-Speech Section */}
+        {/* Text-to-Speech Section 
         <section>
           <TextToSpeechForm />
         </section>
+        */}
       </header>
     </div>
   );

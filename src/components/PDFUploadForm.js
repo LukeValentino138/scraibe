@@ -11,7 +11,7 @@ const PDFUploadForm = ({ setExtractedText }) => {
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
-    if (selectedFile && selectedFile.size > 5 * 1024 * 1024) {
+    if (selectedFile && selectedFile.size > 10 * 1024 * 1024) {
       alert('Please upload a PDF smaller than 5 MB.');
       return;
     }
@@ -70,20 +70,27 @@ const PDFUploadForm = ({ setExtractedText }) => {
     return data.jobId;
   };
 
-  const checkTextractStatus = async (jobId, retries = 10000) => {
+  const checkTextractStatus = async (jobId, retries = 500000) => {
     if (retries <= 0) {
       setText('Textract job timed out.');
       setLoading(false);
       return;
     }
-
+  
     const response = await fetch(`${pdfApiEndpoint}/check-textract-job?jobId=${jobId}`);
     const data = await response.json();
-
+  
     if (data.status === 'SUCCEEDED') {
-      setText(data.text);
+      // Fetch extracted text from the presigned URL
+      if (data.presignedUrl) {
+        const textResponse = await fetch(data.presignedUrl);
+        const extractedText = await textResponse.text();
+        setText(extractedText);
+        setExtractedText(extractedText); // Update parent state
+      } else {
+        setText('Error: No presigned URL provided.');
+      }
       setLoading(false);
-      setExtractedText(data.text); // Update parent state
     } else if (data.status === 'IN_PROGRESS') {
       setTimeout(() => checkTextractStatus(jobId, retries - 1), 2000);
     } else {
@@ -91,6 +98,7 @@ const PDFUploadForm = ({ setExtractedText }) => {
       setLoading(false);
     }
   };
+  
 
   const handleUpload = async () => {
     if (!file) {
