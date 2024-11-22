@@ -15,31 +15,39 @@ function App() {
         <h1>ScrAIbe</h1>
 
         {/* Upload and Transcribe Audio Section */}
-        <UploadForm setTranscription={setTranscription} />
-        {transcription && (
-          <>
-            <h2>Transcription:</h2>
-            <p>{transcription}</p>
-            <SummariseForm transcription={transcription} />
-          </>
-        )}
+        <section>
+          <h2>Audio Transcription</h2>
+          <UploadForm setTranscription={setTranscription} />
+          {transcription && (
+            <>
+              <h3>Transcription:</h3>
+              <p>{transcription}</p>
+              <SummariseForm transcription={transcription} />
+            </>
+          )}
+        </section>
 
         <hr />
 
         {/* Upload and Extract Text from PDF Section */}
-        <PDFUploadForm setExtractedText={setExtractedText} />
-        {extractedText && (
-          <>
-            <h2>Extracted Text:</h2>
-            <p>{extractedText}</p>
-            <SummariseForm transcription={extractedText} />
-          </>
-        )}
+        <section>
+          <h2>PDF Text Extraction</h2>
+          <PDFUploadForm setExtractedText={setExtractedText} />
+          {extractedText && (
+            <>
+              <h3>Extracted Text:</h3>
+              <p>{extractedText}</p>
+              <SummariseForm transcription={extractedText} />
+            </>
+          )}
+        </section>
 
         <hr />
 
         {/* Text-to-Speech Section */}
-        <TextToSpeechForm />
+        <section>
+          <TextToSpeechForm />
+        </section>
       </header>
     </div>
   );

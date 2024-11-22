@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './UploadForm.css';
 
-const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:3000';
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT;
 
 const UploadForm = ({ setTranscription }) => {
   const [file, setFile] = useState(null);

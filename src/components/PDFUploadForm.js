@@ -3,7 +3,7 @@ import './PDFUploadForm.css';
 
 const pdfApiEndpoint = process.env.REACT_APP_PDF_API_ENDPOINT;
 
-const PDFUploadForm = () => {
+const PDFUploadForm = ({ setExtractedText }) => {
   const [file, setFile] = useState(null);
   const [text, setText] = useState('');
   const [jobId, setJobId] = useState('');
@@ -83,6 +83,7 @@ const PDFUploadForm = () => {
     if (data.status === 'SUCCEEDED') {
       setText(data.text);
       setLoading(false);
+      setExtractedText(data.text); // Update parent state
     } else if (data.status === 'IN_PROGRESS') {
       setTimeout(() => checkTextractStatus(jobId, retries - 1), 2000);
     } else {
@@ -120,14 +121,6 @@ const PDFUploadForm = () => {
       <button onClick={handleUpload} disabled={loading}>
         {loading ? 'Processing...' : 'Upload and Extract'}
       </button>
-      <div className="result">
-        <h3>Extracted Text:</h3>
-        <p>
-          {loading
-            ? 'Processing your PDF... Please wait.'
-            : text || 'No text extracted yet.'}
-        </p>
-      </div>
     </div>
   );
 };
