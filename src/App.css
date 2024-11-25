@@ -1,20 +1,41 @@
+/* App.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.App {
-  text-align: center;
-  font-family: Arial, sans-serif;
-  background-color: #f1f1f1;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+/* App.css */
+
+.main-heading {
+  text-align: center; /* Centers text horizontally */
 }
 
+.main-heading h2 {
+  font-size: 2.5rem; /* Large and prominent */
+  font-weight: 900; /* Bold for emphasis */
+  color: #ffffff; /* White for high contrast */
+  text-transform: uppercase; /* Optional: All caps for stronger impact */
+  letter-spacing: 0.05em; /* Slight spacing for better readability */
+  margin: 0; /* Reset margin for consistent spacing */
+  line-height: 1.2; /* Adjust line height for compactness */
+}
+
+
+
+
+/* Remove any background color or conflicting styles */
 .App-header {
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
+  padding-top: 80px; /* Add padding to prevent content from being hidden behind the navbar */
 }
+
+/* Ensure html, body, and #root take full height */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+

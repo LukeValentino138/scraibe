@@ -1,0 +1,23 @@
+.dropdown-menu-content {
+    max-height: 16rem; /* Limit height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    margin-top: 0.5rem;
+    width: 14rem;
+    background-color: white;
+    border-radius: 0.375rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  
+  .dropdown-menu-item {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    color: #4a5568; /* Tailwind gray-700 */
+  }
+  
+  .dropdown-menu-item:hover {
+    background-color: #edf2f7; /* Tailwind gray-100 */
+    color: #2d3748; /* Tailwind gray-900 */
+  }
+  

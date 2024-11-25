@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './PDFUploadForm.css';
+import { TrophySpin } from 'react-loading-indicators';
 
 const pdfApiEndpoint = process.env.REACT_APP_PDF_API_ENDPOINT;
 
@@ -124,11 +125,19 @@ const PDFUploadForm = ({ setExtractedText }) => {
 
   return (
     <div className="pdf-upload-form">
-      <h2>Upload PDF for Text Extraction</h2>
-      <input type="file" accept="application/pdf" onChange={handleFileChange} />
+      <div className="form-controls">
+        <input type="file" accept="application/pdf" onChange={handleFileChange} />
+        {loading && (
+          <div className="loading-indicator">
+            <TrophySpin color="#6281df" size="small" text="" textColor="" />
+          </div>
+          )}
       <button onClick={handleUpload} disabled={loading}>
         {loading ? 'Processing...' : 'Upload and Extract'}
       </button>
+      </div>
+
+
     </div>
   );
 };

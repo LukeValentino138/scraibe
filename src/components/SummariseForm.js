@@ -36,7 +36,6 @@ const SummariseForm = ({ transcription }) => {
     'Industry Professional in Unrelated Field', 
     'ESL Learners', 
     'Individuals with Learning Challenges',
-
   ];
 
   const handleSummarise = async () => {
@@ -97,7 +96,7 @@ const SummariseForm = ({ transcription }) => {
         {loading ? 'Summarising...' : 'Summarise'}
       </button>
       {summary && (
-        <div className="summary-result">
+        <div className="scrollable-box">
           <h4>Summary:</h4>
           <p>{summary}</p>
         </div>

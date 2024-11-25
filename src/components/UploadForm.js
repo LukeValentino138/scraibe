@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './UploadForm.css';
+import { TrophySpin } from 'react-loading-indicators';
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT;
 
@@ -124,12 +125,16 @@ const UploadForm = ({ setTranscription }) => {
 
   return (
     <div className="upload-form">
-      <input type="file" accept="audio/*" onChange={handleFileChange} />
-      <button onClick={handleUpload} disabled={isLoading}>
-        {isLoading ? 'Processing...' : 'Upload and Transcribe'}
-      </button>
-      <div className="progress-bar">
-        <div className="progress-bar-fill" style={{ width: `${progress}%` }}></div>
+      <div className="form-controls">
+        <input type="file" accept="audio/*" onChange={handleFileChange} />
+        {isLoading && (
+          <div className="loading-indicator">
+            <TrophySpin color="#6281df" size="small" text="" textColor="" />
+          </div>
+        )}
+        <button onClick={handleUpload} disabled={isLoading}>
+          {isLoading ? 'Processing...' : 'Upload and Transcribe'}
+        </button>
       </div>
     </div>
   );

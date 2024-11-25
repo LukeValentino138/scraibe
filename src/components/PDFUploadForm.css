@@ -1,35 +1,50 @@
 .pdf-upload-form {
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    width: 400px;
-    margin: 0 auto;
-    text-align: center;
+  font-family: Arial, sans-serif;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
   }
   
   .pdf-upload-form h2 {
-    margin-bottom: 15px;
+    font-size: 24px;
+    margin-bottom: 20px;
   }
   
   .pdf-upload-form input {
-    margin-bottom: 10px;
+    display: block;
+    margin: 20px auto;
   }
   
   .pdf-upload-form button {
     background-color: #007bff;
     color: white;
     border: none;
-    padding: 10px 15px;
+    padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
   }
   
   .pdf-upload-form button:disabled {
     background-color: #ccc;
+    cursor: not-allowed;
   }
   
   .result {
     margin-top: 20px;
-    text-align: left;
+    font-size: 16px;
+    color: #333;
   }
+  
+  .form-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Space between input, loading spinner, and button */
+  }
+  
   

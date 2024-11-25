@@ -1,40 +1,22 @@
-.summarise-form {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .summarise-form button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .summarise-form button:hover {
-    background-color: #0056b3;
-  }
-  
-  .summarise-form button:disabled {
-    background-color: #d3d3d3;
-    cursor: not-allowed;
-  }
-  
-  .summary-result {
-    margin-top: 20px;
-    text-align: left;
-  }
-  
-  .summary-result h4 {
-    margin: 0;
-    font-weight: bold;
-  }
-  
-  .summary-result p {
-    font-size: 14px;
-    color: #333;
-  }
-  
+.scrollable-box {
+  max-height: 380px; 
+  height: 250px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  color: #333;
+  text-align: left;
+  margin-top: 10px;
+  resize: vertical;
+}
+
+.dropdown-container {
+  max-height: 150px;
+  width: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+}
