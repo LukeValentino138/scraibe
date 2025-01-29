@@ -25,10 +25,3 @@ The **backend is fully functional**, while the **frontend (ReactJS) is under dev
 4. NLP models summarize the extracted text.
 5. Processed results are stored in **S3**.
 6. Users receive status updates asynchronously.
-
-## License
-This project is licensed under a **proprietary license**.
-
----
-Stay updated by following this repository! 🚀
-
