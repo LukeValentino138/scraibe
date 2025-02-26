@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import './UploadForm.css';
 import { TrophySpin } from 'react-loading-indicators';
 
-const apiEndpoint = process.env.REACT_APP_API_ENDPOINT;
+const apiCheckTranscribe = process.env.REACT_APP_SCRAIBE_CONVERSION_CHECK_TRANSCRIBE;
+const apiUploadAudio = process.env.REACT_APP_SCRAIBE_UPLOAD_AUDIO;
+const apiStartTranscribe = process.env.REACT_APP_SCRAIBE_CONVERSION_START_TRANSCRIBE;
 
 const UploadForm = ({ setTranscription }) => {
   const [file, setFile] = useState(null);
@@ -15,25 +17,24 @@ const UploadForm = ({ setTranscription }) => {
 
   const updateProgress = () => {
     if (progress < 100) {
-      setProgress((prevProgress) => prevProgress + 10); // Increment progress by 10%
-      setTimeout(updateProgress, 1000); // Update every second
+      setProgress((prevProgress) => prevProgress + 10);
+      setTimeout(updateProgress, 1000);
     }
   };
 
   const checkTranscriptionStatus = async (jobName) => {
     try {
       const statusResponse = await fetch(
-        `${apiEndpoint}/check-transcription-status?jobName=${encodeURIComponent(jobName)}`
+        `${apiCheckTranscribe}?jobName=${encodeURIComponent(jobName)}`
       );
       const statusData = await statusResponse.json();
 
       if (statusData.status === 'COMPLETED') {
-        // Use setTranscription prop to update the transcription in App.js
         setTranscription(statusData.transcription);
         setIsLoading(false);
-        setProgress(100); // Set progress to 100% when done
+        setProgress(100);
       } else if (statusData.status === 'IN_PROGRESS') {
-        setTimeout(() => checkTranscriptionStatus(jobName), 500); // Retry after 0.5 seconds
+        setTimeout(() => checkTranscriptionStatus(jobName), 500);
       } else {
         setTranscription('Transcription failed.');
         setIsLoading(false);
@@ -55,18 +56,16 @@ const UploadForm = ({ setTranscription }) => {
 
     setIsLoading(true);
     setProgress(0);
-    updateProgress(); // Start progress bar animation
+    updateProgress();
 
     try {
-      // Generate a unique file name
       const timestamp = Date.now();
       const uniqueFileName = `${timestamp}_${file.name}`;
 
       console.log('Unique File Name:', uniqueFileName);
 
-      // Step 1: Get a pre-signed URL
       const presignedUrlResponse = await fetch(
-        `${apiEndpoint}/get-presigned-url?fileName=${encodeURIComponent(uniqueFileName)}`
+        `${apiUploadAudio}?fileName=${encodeURIComponent(uniqueFileName)}`
       );
 
       if (!presignedUrlResponse.ok) {
@@ -80,7 +79,6 @@ const UploadForm = ({ setTranscription }) => {
 
       console.log('Presigned URL:', presignedUrl);
 
-      // Step 2: Upload the file to S3
       const uploadResponse = await fetch(presignedUrl, {
         method: 'PUT',
         body: file,
@@ -96,8 +94,7 @@ const UploadForm = ({ setTranscription }) => {
 
       console.log('File uploaded successfully to S3');
 
-      // Step 3: Start transcription
-      const transcribeResponse = await fetch(`${apiEndpoint}/transcribe`, {
+      const transcribeResponse = await fetch(apiStartTranscribe, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -113,7 +110,6 @@ const UploadForm = ({ setTranscription }) => {
       const transcribeData = await transcribeResponse.json();
       console.log('Transcription Job Name:', transcribeData.jobName);
 
-      // Step 4: Poll for transcription status
       checkTranscriptionStatus(transcribeData.jobName);
     } catch (error) {
       console.error('Error:', error);

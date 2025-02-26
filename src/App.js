@@ -8,7 +8,7 @@ import './App.css';
 function App() {
   const [transcription, setTranscription] = useState('');
   const [extractedText, setExtractedText] = useState('');
-  const [activeTab, setActiveTab] = useState('audio'); // 'audio' or 'pdf'
+  const [activeTab, setActiveTab] = useState('audio'); 
 
   return (
     <div className="relative min-h-screen w-full bg-slate-950">

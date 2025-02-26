@@ -1,4 +1,3 @@
-// src/components/SummariseForm.js
 import React, { useState } from 'react';
 import './SummariseForm.css';
 import { DropdownMenu, DropdownMenuItem } from './ui/DropdownMenu';
@@ -9,6 +8,7 @@ const SummariseForm = ({ transcription }) => {
   const [level, setLevel] = useState('Select Level');
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT;
+  const geminiEndpoint = process.env.REACT_APP_SCRAIBE_ANALYSIS_GEMINI;
 
   const levels = [
     'Kindergarten (Ages 4-5)', 
@@ -48,7 +48,7 @@ const SummariseForm = ({ transcription }) => {
     setSummary('');
 
     try {
-      const response = await fetch(`${apiEndpoint}/geminiSummarise`, {
+      const response = await fetch(geminiEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

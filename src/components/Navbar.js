@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RiMenu3Line, RiCloseFill } from '@remixicon/react'; // Import Remix Icons
+import { RiMenu3Line, RiCloseFill } from '@remixicon/react'; 
 import './Navbar.css';
 
 const Navbar = ({ activeTab, onTabChange }) => {
@@ -7,7 +7,7 @@ const Navbar = ({ activeTab, onTabChange }) => {
 
   const handleLinkClick = (tab) => {
     onTabChange(tab);
-    setMenuOpen(false); // Close menu on selection
+    setMenuOpen(false); 
   };
 
   return (

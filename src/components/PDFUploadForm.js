@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import './PDFUploadForm.css';
 import { TrophySpin } from 'react-loading-indicators';
 
-const pdfApiEndpoint = process.env.REACT_APP_PDF_API_ENDPOINT;
+const apiCheckTextract = process.env.REACT_APP_SCRAIBE_CONVERSION_CHECK_TEXTRACT;
+const apiStartTextract = process.env.REACT_APP_SCRAIBE_CONVERSION_START_TEXTRACT;
+const apiUploadDocument = process.env.REACT_APP_SCRAIBE_UPLOAD_DOCUMENTS;
 
 const PDFUploadForm = ({ setExtractedText }) => {
   const [file, setFile] = useState(null);
@@ -23,7 +25,7 @@ const PDFUploadForm = ({ setExtractedText }) => {
     const fileName = file.name;
 
     const presignedUrlResponse = await fetch(
-      `${pdfApiEndpoint}/get-presigned-url-pdf?fileName=${encodeURIComponent(fileName)}`
+      `${apiUploadDocument}?fileName=${encodeURIComponent(fileName)}`
     );
 
     if (!presignedUrlResponse.ok) {
@@ -32,7 +34,6 @@ const PDFUploadForm = ({ setExtractedText }) => {
 
     const presignedUrlData = await presignedUrlResponse.json();
 
-    // Debugging: Inspect the response
     console.log('presignedUrlData:', presignedUrlData);
 
     const { presignedUrl, s3ObjectKey } = presignedUrlData;
@@ -53,9 +54,9 @@ const PDFUploadForm = ({ setExtractedText }) => {
   };
 
   const startTextractJob = async (fileKey) => {
-    console.log('Starting Textract job with fileKey:', fileKey); // For debugging
+    console.log('Starting Textract job with fileKey:', fileKey);
 
-    const response = await fetch(`${pdfApiEndpoint}/start-textract-job`, {
+    const response = await fetch(apiStartTextract, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ fileKey }),
@@ -78,16 +79,15 @@ const PDFUploadForm = ({ setExtractedText }) => {
       return;
     }
   
-    const response = await fetch(`${pdfApiEndpoint}/check-textract-job?jobId=${jobId}`);
+    const response = await fetch(`${apiCheckTextract}?jobId=${jobId}`);
     const data = await response.json();
   
     if (data.status === 'SUCCEEDED') {
-      // Fetch extracted text from the presigned URL
       if (data.presignedUrl) {
         const textResponse = await fetch(data.presignedUrl);
         const extractedText = await textResponse.text();
         setText(extractedText);
-        setExtractedText(extractedText); // Update parent state
+        setExtractedText(extractedText); 
       } else {
         setText('Error: No presigned URL provided.');
       }
@@ -112,7 +112,7 @@ const PDFUploadForm = ({ setExtractedText }) => {
 
     try {
       const { s3ObjectKey } = await uploadToS3();
-      console.log('Received s3ObjectKey:', s3ObjectKey); // For debugging
+      console.log('Received s3ObjectKey:', s3ObjectKey); 
       const jobId = await startTextractJob(s3ObjectKey);
       setJobId(jobId);
       checkTextractStatus(jobId);
